@@ -38,7 +38,7 @@ All the code referenced in this writeup can be found in the [vehicle_detection.i
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images. 
 
-I started by reading in all the `vehicle` and `non-vehicle` images (see the *Load data* section).  Here is an example image the `vehicle`  class:
+I started by reading in all the `vehicle` and `non-vehicle` images (see the **Load data** section).  Here is an example image the `vehicle`  class:
 
 ![alt text][example_car]
 
@@ -46,7 +46,7 @@ And here an example of the  `non-vehicle` class:
 
 ![alt text][example_notcar]
 
-I then reused the `get_hog_features` and `extract_features` from the *HOG Classify* lesson in the [Udacity Self Driving car nanodegree](https://www.udacity.com/)
+I then reused the `get_hog_features` and `extract_features` from the **HOG Classify** lesson in the [Udacity Self Driving car nanodegree](https://www.udacity.com/)
 
 Here is an example using the `RGB` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
@@ -55,7 +55,7 @@ Here is an example using the `RGB` color space and HOG parameters of `orientatio
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried all the following combinations of parameters (see the *Choice of HOG parameters* section):
+I tried all the following combinations of parameters (see the **Choice of HOG parameters** section):
  
 ```python
 color_spaces = ['RGB', 'HSV', 'LUV', 'HLS', 'YUV', 'YCrCb']
@@ -81,7 +81,7 @@ I dicided to continue with the third combination because it extracts less featur
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using the HOG features extracted as described above (see *Build Model* and *Train with full data* sections).
+I trained a linear SVM using the HOG features extracted as described above (see **Build Model** and **Train with full data** sections).
 I used a [StandardScaler](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) to scale the features to to zero mean and unit variance before training the classifier
 
 ###Sliding Window Search
@@ -89,8 +89,8 @@ I used a [StandardScaler](http://scikit-learn.org/stable/modules/generated/sklea
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to extract HOG features only once per image, and then for each window searched, extract the corresponding features, normalize them and predict its class using
-the trained model (see *Hog Sub-sampling Window Search*). 
-The scale of *1.5* and *2* cells per steps taken from the *Hog Sub-sampling Window Search* lesson in the  [Udacity Self Driving car nanodegree](https://www.udacity.com/)
+the trained model (see **Hog Sub-sampling Window Search**). 
+The scale of **1.5** and **2** cells per steps taken from the **Hog Sub-sampling Window Search** lesson in the  [Udacity Self Driving car nanodegree](https://www.udacity.com/)
 produced acceptable results.
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
@@ -99,13 +99,13 @@ Having an image like this one:
 
 ![alt text][original_image]
 
-I apply the following pipeline (see *Car detection pipeline* sectioin):
+I apply the following pipeline (see **Car detection pipeline** sectioin):
 
 I first predict the boxes in the image which might contain a car using Hog Sub-sampling Window Search described above. The output looks like this:
 
 ![alt text][hog_sub_sampling_window_search]
 
-I then use a heat map to eliminate false positives and keep a single prediction per car (see *Heat map for single detection per car* section)
+I then use a heat map to eliminate false positives and keep a single prediction per car (see **Heat map for single detection per car** section)
 Following are images of the heatmap coresspoing to the example above, and the resulting boxes
 
 ![alt text][heatmap]
@@ -123,7 +123,7 @@ Here's a [link to my video result](./project_video_outpt.mp4)
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video (see `Tracker()`).  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions (here I resused the code from the *Heat map for single detection per car* section).  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video (see `Tracker()`).  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions (here I resused the code from the **Heat map for single detection per car** section).  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
 
 ---
